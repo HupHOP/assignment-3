@@ -119,3 +119,12 @@ The final workflow on `main` passes.
 - `demo/ci-failure` holds the failing commit and its fix, and was merged
   through pull request #1.
 - Both branches were kept for history.
+
+## Assumptions
+
+- Docker Engine and Docker Compose v2 are installed and the Docker daemon is running. `scripts/build.sh` and `grade.sh` build the image, and the first build needs internet access to download the Alpine base image and install `bash`.
+- The application only runs on Linux, because `system-info` reads `/proc` and `/etc/os-release` and the host check uses `getent`.
+- The tests use `localhost` and the reserved name `no-such-host.invalid` instead of real websites, so the test suite and the CI pipeline do not depend on external services being reachable.
+- `check-host` skips the ping step with a notice if `ping` is not installed. If `ping` is installed but gets no reply (for example, ICMP is blocked), that counts as a failure and the command exits with code 1.
+- The scripts must be committed with the executable bit set (mode 100755), because GitHub Actions checks the repository out from Git and runs them directly.
+- The workflow runs on `ubuntu-latest` and uses `actions/checkout@v4`. GitHub reports annotations that Node.js 20 is deprecated for that action and that the `ubuntu-latest` label is moving to a newer Ubuntu release. They are warnings only, and all jobs pass.

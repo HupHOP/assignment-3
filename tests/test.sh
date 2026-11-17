@@ -30,7 +30,7 @@ run_test "unknown command is rejected" 2 "unknown command" nonsense
 run_test "check-host without a host is rejected" 2 "requires a host" check-host
 run_test "check-host rejects a bad hostname" 2 "invalid hostname" check-host 'a;b'
 run_test "check-host passes for localhost" 0 "host check passed" check-host localhost
-run_test "check-host falls for an unresolvable host" 1 "FAILED" check-host no-such-host.invalid
+run_test "check-host fails for an unresolvable host" 1 "FAILED" check-host no-such-host.invalid
 run_test "check-port without a port is rejected" 2 "requires a host and a port" check-port localhost 
 run_test "check-port rejects a non-numeric port" 2 "whole number" check-port localhost abc
 run_test "check-port rejects port 0" 2 "whole number" check-port localhost 0
